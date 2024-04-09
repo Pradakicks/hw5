@@ -22,6 +22,7 @@ std::set<std::string> wordle(const std::string& in, const std::string& floating,
   std::cout << in << std::endl;
   std::cout << floating << std::endl;
   wordleHelper("", in, floating, dict, answers);
+  return answers;
 }
 
 // Define any helper functions here
