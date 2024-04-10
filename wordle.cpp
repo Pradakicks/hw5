@@ -17,10 +17,7 @@ using namespace std;
 std::set<std::string> wordle(const std::string& in, const std::string& floating,
                              const std::set<std::string>& dict) {
   // Add your code here
-  unsigned int length = in.length();
   std::set<std::string> answers;
-  std::cout << in << std::endl;
-  std::cout << floating << std::endl;
   wordleHelper("", in, floating, dict, answers);
   return answers;
 }
@@ -32,9 +29,13 @@ int wordleHelper(std::string word, const std::string& in,
                  const std::set<std::string>& dict, std::set<std::string>& answers) {
   if (word.length() == in.length()) {
     // Check if word is valid then print
+    std::string currentWord = word;
     for (size_t i = 0; i < floating.length(); i++) {
-      if (word.find(floating[i]) == string::npos) {
+        size_t pos = currentWord.find(floating[i]);
+      if (pos == string::npos) {
         return 0;
+      } else {
+        currentWord[pos] = '-';
       }
     }
     std::set<std::string>::iterator it = dict.find(word);
