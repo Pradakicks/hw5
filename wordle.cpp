@@ -25,24 +25,23 @@ std::set<std::string> wordle(const std::string& in, const std::string& floating,
 // Define any helper functions here
 
 int wordleHelper(std::string word, const std::string& in,
-                 const std::string& floating,
-                 const std::set<std::string>& dict, std::set<std::string>& answers) {
+                 const std::string& floating, const std::set<std::string>& dict,
+                 std::set<std::string>& answers) {
   if (word.length() == in.length()) {
     // Check if word is valid then print
+    std::set<std::string>::iterator it = dict.find(word);
+    if (it == dict.end()) return 0;
+
     std::string currentWord = word;
     for (size_t i = 0; i < floating.length(); i++) {
-        size_t pos = currentWord.find(floating[i]);
+      size_t pos = currentWord.find(floating[i]);
       if (pos == string::npos) {
         return 0;
       } else {
         currentWord[pos] = '-';
       }
     }
-    std::set<std::string>::iterator it = dict.find(word);
-    if (it != dict.end()) {
-    //   std::cout << word << std::endl;
-      answers.insert(word);
-    }
+    answers.insert(word);
 
   } else {
     if (in[word.length()] == '-') {
