@@ -22,6 +22,10 @@ std::set<std::string> wordle(const std::string& in, const std::string& floating,
                              const std::set<std::string>& dict) {
   // Add your code here
   std::set<std::string> answers;
+  int unknownLettersCtr = 0;
+  for (size_t i = 0; i < in.size(); i++) {
+    if (in[i] == '-') unknownLettersCtr++;
+  }
   wordleHelper("", in, floating, dict, answers, 5, 0);
   return answers;
 }
@@ -47,7 +51,7 @@ int wordleHelper(std::string word, const std::string& in,
       }
     }
     answers.insert(word);
-    
+
   } else {
     if (in[word.length()] == '-') {
       if (unknownLettersCtr > currFloating.length()) {
