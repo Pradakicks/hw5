@@ -43,15 +43,15 @@ int wordleHelper(std::string word, const std::string& in,
     std::set<std::string>::iterator it = dict.find(word);
     if (it == dict.end()) return 0;
 
-    // std::string currentWord = word;
-    // for (size_t i = 0; i < ogFloating.length(); i++) {
-    //   size_t pos = currentWord.find(ogFloating[i]);
-    //   if (pos == string::npos) {
-    //     return 0;
-    //   } else {
-    //     currentWord[pos] = '-';
-    //   }
-    // }
+    std::string currentWord = word;
+    for (size_t i = 0; i < ogFloating.length(); i++) {
+      size_t pos = currentWord.find(ogFloating[i]);
+      if (pos == string::npos) {
+        return 0;
+      } else {
+        currentWord[pos] = '-';
+      }
+    }
     answers.insert(word);
 
   } else {
