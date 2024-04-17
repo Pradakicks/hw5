@@ -56,7 +56,7 @@ int wordleHelper(std::string word, const std::string& in,
 
   } else {
     if (in[word.length()] == '-') {
-      if (unknownLettersCtr > currFloating.length()) {
+      if (unknownLettersCtr >= currFloating.length()) {
         for (size_t i = 0; i < 26; i++) {
           char c = i + 97;
           currFloating = floating;
