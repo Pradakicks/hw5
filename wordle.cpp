@@ -33,10 +33,21 @@ int wordleHelper(std::string word, const std::string& in,
                  std::set<std::string>& answers, size_t unknownLettersCtr,
                  size_t index) {
   std::string currFloating = floating;
+  std::string currentWord = word;
 
   if (index == in.length()) {
     std::set<std::string>::iterator it = dict.find(word);
-    if (it != dict.end()) answers.insert(word);
+    if (it == dict.end()) return 0;
+      for (size_t i = 0; i < floating.length(); i++) {
+      size_t pos = currentWord.find(floating[i]);
+      if (pos == string::npos) {
+        return 0;
+      } else {
+        currentWord[pos] = '-';
+      }
+    }
+    answers.insert(word);
+    
   } else {
     if (in[word.length()] == '-') {
       if (unknownLettersCtr > currFloating.length()) {
