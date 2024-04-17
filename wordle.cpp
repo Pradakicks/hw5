@@ -15,7 +15,7 @@ using namespace std;
 int wordleHelper(std::string word, const std::string& in,
                  const std::string& floating, const std::set<std::string>& dict,
                  std::set<std::string>& answers, size_t unknownLettersCtr,
-                 size_t index);
+                 size_t index, std::string ogFloating);
                  
 // Definition of primary wordle function
 std::set<std::string> wordle(const std::string& in, const std::string& floating,
@@ -26,7 +26,7 @@ std::set<std::string> wordle(const std::string& in, const std::string& floating,
   for (size_t i = 0; i < in.size(); i++) {
     if (in[i] == '-') unknownLettersCtr++;
   }
-  wordleHelper("", in, floating, dict, answers, 5, 0);
+  wordleHelper("", in, floating, dict, answers, 5, 0, floating);
   return answers;
 }
 
@@ -35,15 +35,17 @@ std::set<std::string> wordle(const std::string& in, const std::string& floating,
 int wordleHelper(std::string word, const std::string& in,
                  const std::string& floating, const std::set<std::string>& dict,
                  std::set<std::string>& answers, size_t unknownLettersCtr,
-                 size_t index) {
+                 size_t index, std::string ogFloating) {
   std::string currFloating = floating;
-  std::string currentWord = word;
 
-  if (index == in.length()) {
+   if (word.length() == in.length()) {
+    // Check if word is valid then print
     std::set<std::string>::iterator it = dict.find(word);
     if (it == dict.end()) return 0;
-      for (size_t i = 0; i < floating.length(); i++) {
-      size_t pos = currentWord.find(floating[i]);
+
+    std::string currentWord = word;
+    for (size_t i = 0; i < ogFloating.length(); i++) {
+      size_t pos = currentWord.find(ogFloating[i]);
       if (pos == string::npos) {
         return 0;
       } else {
@@ -63,7 +65,7 @@ int wordleHelper(std::string word, const std::string& in,
             currFloating.erase(currFloating.begin() + isFloating);
           }
           wordleHelper(word + c, in, currFloating, dict, answers,
-                       unknownLettersCtr - 1, index + 1);
+                       unknownLettersCtr - 1, index + 1, ogFloating);
         }
       } else {
         for (unsigned int i = 0; i < currFloating.length(); i++) {
@@ -73,12 +75,12 @@ int wordleHelper(std::string word, const std::string& in,
           currFloating.erase(currFloating.begin() + i);
 
           wordleHelper(word + a, in, currFloating, dict, answers,
-                       unknownLettersCtr - 1, index + 1);
+                       unknownLettersCtr - 1, index + 1, ogFloating);
         }
       }
     } else {
       wordleHelper(word + in[index], in, currFloating, dict, answers,
-                   unknownLettersCtr, index + 1);
+                   unknownLettersCtr, index + 1, ogFloating);
     }
   }
   return 0;
